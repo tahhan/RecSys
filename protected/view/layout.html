@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <title>{{app_title}}</title>
+      <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+      <meta http-equiv="X-UA-Compatible" content="IE=8" />
+
+      <!-- STYLING -->
+      <!--link href="{{APP_URL}}global/css/reset.css" rel="stylesheet" type="text/css" / -->
+      <link href="{{APP_URL}}global/css/{{page_path}}.css" rel="stylesheet" type="text/css" />
+      <link href="{{APP_URL}}global/js/jquery/jquery-ui/flick/jquery-ui.css" rel="stylesheet" type="text/css" />
+      <link href="{{APP_URL}}global/js/jquery/from-validator/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+      <link href="{{APP_URL}}global/css/general.css" rel="stylesheet" type="text/css" />
+      <!--[if lt IE 8]><link href="{{APP_URL}}global/css/common/ie.css" rel="stylesheet" type="text/css" /><![endif]-->
+
+      <!-- ENDOF STYLING -->
+
+      <!-- JAVASCRIPT -->
+      <script src="{{APP_URL}}global/js/jquery/jquery.min.js" type="text/javascript" ></script>
+      <script src="{{APP_URL}}global/js/jquery/jquery-ui/jquery-ui.js" type="text/javascript" ></script>
+      <script src="{{APP_URL}}global/js/jquery/from-validator/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
+      <script src="{{APP_URL}}global/js/jquery/from-validator/jquery.validationEngine.js" type="text/javascript" ></script>
+      <script src="{{APP_URL}}global/js/app.js" type="text/javascript"></script>
+
+      {# commented not needed for now
+      <script type="text/javascript"> var ie9 = false;</script>
+      <!--[if IE ]>
+         <script type="text/javascript"> ie9 = true;</script>
+      <![endif]-->
+      #}
+
+      {# Get page-specific JS files #}
+      {% for page_js as jsfile %}
+      <script src="{{APP_URL}}global/js/{{jsfile}}.js" type="text/javascript"></script>
+      {% ifempty %}
+      <!-- NO ADDITIONAL JS FILES -->
+      {% endif %}
+      <!-- ENDOF JAVASCRIPTS -->
+
+      <script type="text/javascript">
+         var LANG = '{{lang}}';
+         var APP_URL = '{{APP_URL}}';
+         {% for page_js_vars as key=>value %}
+         var {{key}}={{value}};
+         {% endfor %}
+         
+         $(document).ready(function(){
+            $('.button').button();
+            
+            $('#login_form').validationEngine();
+            $('#signup_form').validationEngine();
+            $('#add_rrf_form').validationEngine();
+            $('#profile_add_form').validationEngine();
+         });
+      </script>
+   </head>
+   <body id="{{template}}-{{page}}" class="bp {{lang}} {{template}} {{page}}">
+
+      <div id="wrapper" class="container" >
+         <div class="flash-container">
+            {% for flash as f_key=>f %}
+            <div id="flash_{{f_key}}" class="ui-corner-all ui-state-{{f->flashClass}}">
+               <p>{{f->flashMessage|t}}</p>
+               <span onclick="$('#flash_{{f_key}}').hide();" class="close-div"> &times; </span>
+            </div>
+            {% endfor %}
+         </div>
+         <!-- placeholder:header -->
+         <div id="header">
+            <div id="logo" onclick="window.open('{{APP_URL}}', '_top');"><img alt="logo" src="{{APP_URL}}global/img/logo.png"></div>
+            <div id="login">
+               {% if user_group == 'employer' %}
+               <div class="loginl"><a href="{{APP_URL}}user/logout">Logout</a></div>  <div class="loginl"><a href="{{APP_URL}}employer">Control Page</a></div>  <div class="loginl">Welcome {{user_name}}</div>
+               {% elseif user_group == 'seeker' %}
+                <div class="loginl"><a href="{{APP_URL}}user/logout">Logout</a></div> <div class="loginl"><a href="{{APP_URL}}seeker">Profile Page</a></div> <div class="loginl">Welcome {{user_name}}</div> 
+               {% else %}
+               <div class="loginl"><a href="{{APP_URL}}user/login/employer">Employer Login</a></div>
+               <div class="loginl"><a href="{{APP_URL}}user/login/seeker">Job Seeker Login</a></div>
+               {% endif %}
+               <div class="clear">&nbsp;</div>
+            </div>
+            <div class="clear">&nbsp;</div>
+         </div>
+         <div id="menu-bar">
+            <div id="menu">
+               {% if template == 'seeker' %}
+               <div class="menu-item"><a href="{{APP_URL}}" class="link" >Home</a></div>
+               <div class="menu-item"><a href="{{APP_URL}}user/login/seeker" class="link active" >Job Seeker</a></div>
+               <div class="menu-item"><a href="{{APP_URL}}user/login/employer" class="link" >Employer</a></div>
+               {% elseif (template == 'employer')  || (template == 'dept') %}
+               <div class="menu-item"><a href="{{APP_URL}}" class="link" >Home</a></div>
+               <div class="menu-item"><a href="{{APP_URL}}user/login/seeker" class="link" >Job Seeker</a></div>
+               <div class="menu-item"><a href="{{APP_URL}}user/login/employer" class="link active" >Employer</a></div>
+               {% elseif template == 'app' && page == 'index' %}
+               <div class="menu-item"><a href="{{APP_URL}}" class="link active" >Home</a></div>
+               <div class="menu-item"><a href="{{APP_URL}}user/login/seeker" class="link" >Job Seeker</a></div>
+               <div class="menu-item"><a href="{{APP_URL}}user/login/employer" class="link" >Employer</a></div>
+               {% else %}
+               <div class="menu-item"><a href="{{APP_URL}}" class="link" >Home</a></div>
+               <div class="menu-item"><a href="{{APP_URL}}user/login/seeker" class="link" >Job Seeker</a></div>
+               <div class="menu-item"><a href="{{APP_URL}}user/login/employer" class="link" >Employer</a></div>
+               {% endif %}
+               <div class="menu-item"><a href="{{APP_URL}}app/about" class="link" >About</a></div>
+               <div class="clear">&nbsp;</div>
+            </div>
+            <div id="search">
+               <input class="search_field" type="text">
+               <input class="submit" type="submit" value=" " />
+               <div class="clear">&nbsp;</div>
+            </div>
+            <div class="clear">&nbsp;</div>
+         </div>
+         <!-- endplaceholder -->
+
+         <div id="content">
+            {% include page_path %}
+         </div>
+
+         <!-- placeholder:footer -->
+         <div id="footer">
+            <div class="footer-col">
+               <a href="#">Home</a><br/>
+               <a href="#">Signup</a>
+            </div>
+            <div class="sep">&nbsp;</div>
+            <div class="footer-col">
+						Jobs : <br/>
+               <a href="{{APP_URL}}app/vacancies_by_countries">By country</a><br/>
+               <a href="{{APP_URL}}">By community</a>
+            </div>
+            <div class="sep">&nbsp;</div>
+            <div class="footer-col">
+						Sitemap: <br/>
+               <a href="#">Home</a><br/>
+               <a href="#">About us</a><br/>
+               <a href="#">Contact</a>
+            </div>
+            <div class="clear">&nbsp;</div>
+         </div>
+         <!-- endplaceholder -->
+      </div>
+   </body>
+</html>

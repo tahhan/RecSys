@@ -1,0 +1,42 @@
+<h2>Edit Company Profile : {{company->company_name}}</h2>
+<form action="{{APP_URL}}employer/edit_profile_submit" method="post">
+   <div class="form-element">
+      <label for="company_name">Company Name:</label>
+      <input type="text" name="company[company_name]" id="company_name" value="{{company->company_name}}" />
+   </div>
+
+   <div class="form-element">
+      <label for="industry_id">Type of industry</label>
+      <select name="company[industry_id]" id="industry_id" >
+         <option value="">Select Industry</option>
+         {% for industries as industry %}
+         <option value="{{industry->id}}" {% if industry->id == company->industry_id %}selected="selected"{% endif %} >{{industry->industry_name}}</option>
+         {% endfor %}
+      </select>
+   </div>
+
+   <div class="form-element">
+      <label for="no_employees">Number of employees</label>
+      <input type="text" name="company[no_employees]" id="no_employees" value="{{company->no_employees}}" />
+   </div>
+
+   <div class="form-element">
+      <label for="country">Country</label>
+      <select name="company[country_id]" id="country">
+         <option>Select Country</option>
+         {% for countries as country %}
+         <option value="{{country->id}}" {% if country->id == company->country_id %}selected="selected"{% endif %} >{{country->country_name}}</option>
+         {% endfor %}
+      </select>
+   </div>
+
+   <div class="form-element">
+      <label for="website">Website</label>
+      <input type="text" name="company[website]" id="website" value="{{company->website}}" />
+   </div>
+
+   <div class="form-element">
+      <input type="hidden" name="company[id]" value="{{company->id}}"/>
+      <input type="submit" value="Save" class="button"/>
+   </div>
+</form>

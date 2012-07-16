@@ -1,0 +1,13 @@
+<h2>Job vacancies By Country</h2>
+{% for countries as country %}
+{% if empty(country->vacancies) != 1 %}
+<div class="country">
+   <span class="bold">{{country->country_name}}:</span><br />
+   <ul>
+      {% for country->vacancies as vacancy %}
+      <li><a href="{{APP_URL}}app/view_vacancy/{{vacancy->id}}" class="button">{{vacancy->job_title}}</a> in <span>({{vacancy->Department->Company->company_name}})</span></li>
+      {% endfor %}
+   </ul>
+</div>
+{% endif %}
+{% endfor %}

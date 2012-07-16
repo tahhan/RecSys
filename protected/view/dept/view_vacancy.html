@@ -1,0 +1,63 @@
+<h2>Vacancy : {{vacancy->job_title}}</h2>
+<fieldset>
+   <legend>Vacancy Information</legend>
+   <div class="form-element">
+      <span class="bold">Job Description :</span>
+      <p>{{vacancy->job_description}}</p>
+   </div>
+
+   <div class="form-element">
+      <span class="bold">Salary :</span>
+      <span>{{vacancy->salary}}</span>
+   </div>
+
+   <div class="form-element">
+      <span class="bold">Number Of Employee Required :</span>
+      <span>{{vacancy->no_employees_required}}</span>
+   </div>
+
+   <div class="form-element">
+      <span class="bold">Type Of Employment :</span>
+      <span>{{vacancy->type_employment}}</span>
+   </div>
+
+   <div class="form-element">
+      <span class="bold">Employment Of Reason :</span>
+      <span>{{vacancy->reason_employment}}</span>
+   </div>
+
+   <div class="form-element">
+      <span class="bold">Type of industry :</span>
+      <span>{{vacancy->Industry->industry_name}}</span>
+   </div>
+
+   <div class="form-element">
+      <span class="bold">Country :</span>
+      <span>{{vacancy->Country->country_name}}</span>
+   </div>
+
+   <div class="form-element">
+      <span class="bold">Status :</span>
+      <span>{{vacancy->status}}</span>
+   </div>
+</fieldset>
+<fieldset>
+   <legend>Applicants</legend>
+   <ul>
+      {% for applicants as applicant %}
+      <li><a href="{{APP_URL}}app/view_seeker/{{applicant->id}}" class="button">{{applicant->full_name}}</a></li>
+      {% ifempty %}
+      <h3>No applicants yet</h3>
+      {% endif %}
+   </ul>
+</fieldset>
+<fieldset>
+   <legend>candidates</legend>
+   <ul>
+      {% for candidates as candidate %}
+      <li><a href="{{APP_URL}}app/view_seeker/{{candidate->id}}" class="button">{{candidate->full_name}}</a></li>
+      {% ifempty %}
+      <h3>No candidate yet</h3>
+      {% endif %}
+   </ul>
+</fieldset>

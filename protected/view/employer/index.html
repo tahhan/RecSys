@@ -1,0 +1,31 @@
+<h1>HR Department</h1>
+<a href="{{APP_URL}}employer/edit_profile" class="button">Edit Company Profile</a>
+<fieldset>
+   <legend>Departments</legend>
+   <a href="{{APP_URL}}employer/assign_dept" class="button" >Assign New Departments</a>
+   <ul>
+      {% for departments as dept %}
+      <li><a href="{{APP_URL}}employer/edit_dept/{{dept->id}}" class="button">{{dept->name}}</a></li>
+      {% endfor %}
+   </ul>
+</fieldset>
+<fieldset>
+   <legend>Vacancies</legend>
+   <ul>
+      {% for vacancies as vacancy %}
+      <li><a href="{{APP_URL}}employer/view_vacancy/{{vacancy->id}}" class="button">{{vacancy->job_title}}</a> <span>({{vacancy->status}})</span></li>
+      {% ifempty %}
+      <h3>vacancies are empty</h3>
+      {% endif %}
+   </ul>
+</fieldset>
+<fieldset>
+   <legend>Pending RRFs</legend>
+   <ul>
+      {% for rrfs as rrf %}
+      <li><a href="{{APP_URL}}employer/view_rrf/{{rrf->id}}" class="button">{{rrf->job_title}}</a> <span>({{rrf->status}})</span></li>
+      {% ifempty %}
+      <h3> no RRFs Pending</h3>
+      {% endif %}
+   </ul>
+</fieldset>

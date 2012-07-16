@@ -1,0 +1,23 @@
+<h1>{{dept->name}}</h1>
+<fieldset>
+   <legend>RRFs</legend>
+   <a href="{{APP_URL}}dept/add_rrf" class="button">Add New RRF</a>
+   <ul>
+      {% for rrfs as rrf %}
+      <li><a href="{{APP_URL}}dept/view_rrf/{{rrf->id}}" class="button">{{rrf->job_title}}</a> <span>({{rrf->status}})</span></li>
+      {% ifempty %}
+      <h3>RRFs are empty</h3>
+      {% endif %}
+   </ul>
+</fieldset>
+<fieldset>
+   <legend>Vacancies</legend>
+   <ul>
+      {% for vacancies as vacancy %}
+      <li><a href="{{APP_URL}}dept/view_vacancy/{{vacancy->id}}" class="button">{{vacancy->job_title}}</a> <span>({{vacancy->status}})</span></li>
+
+      {% ifempty %}
+      <h3>vacancies are empty</h3>
+      {% endif %}
+   </ul>
+</fieldset>

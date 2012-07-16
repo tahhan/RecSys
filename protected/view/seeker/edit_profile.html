@@ -1,0 +1,198 @@
+<h2>Edit Profile</h2>
+<form action="{{APP_URL}}seeker/edit_profile_submit" method="post">
+   <fieldset>
+      <legend>Personal Information</legend>
+      <div class="form-element">
+         <label for="name">Full Name</label>
+         <input type="text" name="seeker[full_name]" id="name" value="{{seeker->full_name}}" class="validate[required]"  />
+      </div>
+
+      <div class="form-element">
+         <label for="telephone">Phone Number</label>
+         <input type="text" name="seeker[telephone]" id="telephone" value="{{seeker->telephone}}" class="validate[required]" />
+      </div>
+
+      <div class="form-element">
+         <label for="DOB">DOB</label>
+         <input type="text" name="date" id="DOB" class="datepicker" autocomplete="off" value="{{seeker->DOB}}" class="validate[required]"/>
+         <input type="hidden" name="seeker[DOB]" id="actualDate" value="{{seeker->DOB}}">
+      </div>
+
+      <div class="form-element">
+         <label for="gender">Gender</label>
+         <select name="seeker[gender]" id="gender" >
+            <option value="0" {% if seeker->gender == 0 %} selected="selected" {% endif %}>Male</option>
+            <option value="1" {% if seeker->gender == 1 %} selected="selected" {% endif %}>Female</option>
+         </select>
+      </div>
+
+      <div class="form-element">
+         <label for="marital_status">Marital Status</label>
+         <select name="seeker[marital_status]" id="marital_status" >
+            <option value="0" {% if seeker->marital_status == 0 %} selected="selected" {% endif %}>Single</option>
+            <option value="1" {% if seeker->marital_status == 1 %} selected="selected" {% endif %}>Married</option>
+         </select>
+      </div>
+      <div id="nation_list">
+         <label for="nationalities">Nationalities :</label>
+         {% for seeker->nationalities as nationalitie %}
+         <div class="form-element" id="nation">
+            <select name="nationalities[]" class="nationalities"  >
+               <option value="">Select Country</option>
+               {% for countries as country %}
+               <option value="{{country->id}}" {% if nationalitie == country->id %}selected="selected"{% endif %}>{{country->country_name}}</option>
+               {% endfor %}
+            </select>
+         </div>
+         {% endfor %}
+         <a id="add_more_nation" href="#0" onclick="addMoreNation();" class="button">Add More</a>
+      </div>
+      <div class="form-element">
+         <label for="living_in">Living In</label>
+         <select name="seeker[living_in]" id="living_in" class="validate[required]" >
+            <option value="">Select Country</option>
+            {% for countries as country %}
+            <option value="{{country->id}}" {% if seeker->living_in == country->id %}selected="selected"{% endif %}>{{country->country_name}}</option>
+            {% endfor %}
+         </select>
+      </div>
+
+      <div class="form-element">
+         <label for="residency_status">Residency Status</label>
+         <select name="seeker[residency_status]" id="residency_status" class="validate[required]" >
+            <option value="">Select status</option>
+            <option value="0" {% if seeker->residency_status == 0 %}selected="selected"{% endif %}>Citizen</option>
+            <option value="1" {% if seeker->residency_status == 1 %}selected="selected"{% endif %}>Residency Visa (Non-transferable)</option>
+            <option value="2" {% if seeker->residency_status == 2 %}selected="selected"{% endif %}>Residency Visa (Transferable)</option>
+            <option value="3" {% if seeker->residency_status == 3 %}selected="selected"{% endif %}>Student Visa</option>
+            <option value="4" {% if seeker->residency_status == 4 %}selected="selected"{% endif %}>Transit Visa</option>
+            <option value="5" {% if seeker->residency_status == 5 %}selected="selected"{% endif %}>Visit Visa</option>
+            <option value="6" {% if seeker->residency_status == 6 %}selected="selected"{% endif %}>No Visa</option>
+         </select>
+      </div>
+
+   </fieldset>
+
+   <fieldset>
+      <legend>Professional Information</legend>
+
+      <div class="form-element">
+         <label for="exp_years">experience years</label>
+         <input type="text" name="seeke_prof_info[exp_years]" id="exp_years" value="{{seeker->SeekerProfessionalInfo->exp_years}}" class="validate[required]" />
+      </div>
+
+      <div class="form-element">
+         <label for="last_job_title">Last Job Title</label>
+         <input type="text" name="seeke_prof_info[last_job_title]" id="last_job_title" value="{{seeker->SeekerProfessionalInfo->last_job_title}}" class="validate[required]" />
+      </div>
+
+      <div class="form-element">
+         <label for="primary_comm">Primary Community</label>
+         <select name="seeke_prof_info[primary_comm]" id="primary_comm" class="validate[required]" >
+            <option value="">Select Community</option>
+            {% for industries as industry %}
+            <option value="{{industry->id}}" {% if seeker->SeekerProfessionalInfo->primary_comm == industry->id %}selected="selected"{% endif %}>{{industry->industry_name}}</option>
+            {% endfor %}
+         </select>
+      </div>
+
+      <div class="form-element">
+         <label for="second_comm">Second Community</label>
+         <select name="seeke_prof_info[second_comm]" id="second_comm" >
+            <option value="0">Select Community</option>
+            {% for industries as industry %}
+            <option value="{{industry->id}}" {% if seeker->SeekerProfessionalInfo->second_comm == industry->id %}selected="selected"{% endif %}>{{industry->industry_name}}</option>
+            {% endfor %}
+         </select>
+      </div>
+
+      <div class="form-element">
+         <label for="third_comm">Third Community</label>
+         <select name="seeke_prof_info[third_comm]" id="third_comm" />
+         <option value="0">Select Community</option>
+         {% for industries as industry %}
+         <option value="{{industry->id}}" {% if seeker->SeekerProfessionalInfo->third_comm == industry->id %}selected="selected"{% endif %}>{{industry->industry_name}}</option>
+         {% endfor %}
+         </select>
+
+      </div>
+      <div id="lang_list">
+         <label for="languages">Languages :</label>
+         {% for seeker->SeekerProfessionalInfo->lang_list as lang %}
+         <div class="form-element" id="lang" >
+            <select name="languages[0][name]" class="lang_name">
+               <option value="arabic" {% if lang->name == 'arabic' %}selected="selected"{% endif %}>Arabic</option>
+               <option value="english" {% if lang->name == 'english' %}selected="selected"{% endif %}>English</option>
+               <option value="armenian" {% if lang->name == 'armenian' %}selected="selected"{% endif %}>Armenian</option>
+               <option value="bengali" {% if lang->name == 'bengali' %}selected="selected"{% endif %}>Bengali</option>
+               <option value="cantonese" {% if lang->name == 'cantonese' %}selected="selected"{% endif %}>Cantonese</option>
+               <option value="danish" {% if lang->name == 'danish' %}selected="selected"{% endif %}>Danish</option>
+               <option value="dutch" {% if lang->name == 'dutch' %}selected="selected"{% endif %}>Dutch</option>
+               <option value="finnish" {% if lang->name == 'finnish' %}selected="selected"{% endif %}>Finnish</option>
+               <option value="french" {% if lang->name == 'french' %}selected="selected"{% endif %}>French</option> 
+               <option value="german" {% if lang->name == 'german' %}selected="selected"{% endif %}>German</option>
+               <option value="greek" {% if lang->name == 'greek' %}selected="selected"{% endif %}>Greek</option>
+               <option value="hebrew" {% if lang->name == 'hebrew' %}selected="selected"{% endif %}>Hebrew</option>
+               <option value="hindi" {% if lang->name == 'hindi' %}selected="selected"{% endif %}>Hindi</option>
+               <option value="italian" {% if lang->name == 'italian' %}selected="selected"{% endif %}>Italian</option>
+               <option value="japanese" {% if lang->name == 'japanese' %}selected="selected"{% endif %}>Japanese</option>
+               <option value="kurdish" {% if lang->name == 'kurdish' %}selected="selected"{% endif %}>Kurdish</option>
+               <option value="mandarin" {% if lang->name == 'mandarin' %}selected="selected"{% endif %}>Mandarin</option>
+               <option value="norwegian" {% if lang->name == 'norwegian' %}selected="selected"{% endif %}>Norwegian</option>
+               <option value="persian" {% if lang->name == 'persian' %}selected="selected"{% endif %}>Persian</option>
+               <option value="portuguese" {% if lang->name == 'portuguese' %}selected="selected"{% endif %}>Portuguese</option>
+               <option value="russian" {% if lang->name == 'russian' %}selected="selected"{% endif %}>Russian</option>
+               <option value="spanish" {% if lang->name == 'spanish' %}selected="selected"{% endif %}>Spanish</option>
+               <option value="swedish" {% if lang->name == 'swedish' %}selected="selected"{% endif %}>Swedish</option>
+               <option value="turkish" {% if lang->name == 'turkish' %}selected="selected"{% endif %}>Turkish</option>
+               <option value="urdu" {% if lang->name == 'urdu' %}selected="selected"{% endif %}>Urdu</option>
+            </select>
+
+            <select name="languages[0][proficiency]" class="lang_proficiency">
+               <option value="beginner" {% if lang->proficiency == 'beginner' %}selected="selected"{% endif %}>Beginner</option>
+               <option value="intermediate" {% if lang->proficiency == 'intermediate' %}selected="selected"{% endif %}>Intermediate</option>
+               <option value="fluent" {% if lang->proficiency == 'fluent' %}selected="selected"{% endif %}>Fluent</option>
+            </select>
+         </div>
+         {% endfor %}
+         <a id="add_more" href="#0" onclick="addMoreLang();" class="button">Add More</a>
+      </div>
+
+      <div class="form-element">
+         <label for="skills">Skills</label>
+         <textarea name="seeke_prof_info[skills]" id="skills" class="validate[required]" >{{seeker->SeekerProfessionalInfo->skills}}</textarea>
+      </div>
+
+      <div class="form-element">
+         <label for="preferd_place">Preferd Place</label>
+         <select name="seeke_prof_info[preferd_place]" id="preferd_place" class="validate[required]" >
+            <option value="">Select Country</option>
+            {% for countries as country %}
+            <option value="{{country->id}}" {% if seeker->SeekerProfessionalInfo->preferd_place == country->id %}selected="selected"{% endif %}>{{country->country_name}}</option>
+            {% endfor %}
+         </select>
+      </div>
+
+   </fieldset>
+
+   <fieldset>
+      <legend>Educational Information</legend>
+
+      <div class="form-element">
+         <label for="highest_level">Highest Level</label>
+         <select name="seeker_edu_info[highest_level]" id="highest_level" class="validate[required]" >
+            <option value="">Select Level</option>
+            <option value="elementary" {% if seeker->SeekerEduInfo->highest_level == 'elementary'%}selected="selected"{% endif %}>Elementary</option>
+            <option value="high_school" {% if seeker->SeekerEduInfo->highest_level == 'high_school'%}selected="selected"{% endif %}>High School</option>
+            <option value="diploma" {% if seeker->SeekerEduInfo->highest_level == 'diploma'%}selected="selected"{% endif %}>Diploma</option>
+            <option value="uni" {% if seeker->SeekerEduInfo->highest_level == 'uni'%}selected="selected"{% endif %}>University</option>
+         </select>
+      </div>
+
+   </fieldset>
+
+   <div class="form-element">
+      <input type="submit" value="Save" class="button" />
+   </div>
+
+</form>

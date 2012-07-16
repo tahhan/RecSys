@@ -1,0 +1,183 @@
+<h2>Edit CV</h2>
+<form action="{{APP_URL}}seeker/view_cv_submit" method="post">
+   <fieldset>
+      <legend>Work exp</legend>
+      <div id="work_exp_list">
+         {% for seeker->SeekerWorkExp as key=>work_exp %}
+         <div id="work_exp" class="element">
+            {% if key != 0%}
+            <hr />
+            {% endif %}
+            <div class="form-element">
+               <label for="job_title">Job Title</label>
+               <input type="text" name="work_exp[{{key}}][job_title]" class="job_title" value="{{work_exp->job_title}}"/>
+            </div>
+
+            <div class="form-element">
+               <label for="company_name">Company Name</label>
+               <input type="text" name="work_exp[{{key}}][company_name]" class="company_name" value="{{work_exp->company_name}}"/>
+            </div>
+
+            <div class="form-element">
+               <label for="country">Country</label>
+               <select name="work_exp[{{key}}][country_id]" class="country" >
+                  <option value="">Select Country</option>
+                  {% for countries as country %}
+                  <option value="{{country->id}}" {% if work_exp->country_id == country->id %}selected="selected"{% endif %}>{{country->country_name}}</option>
+                  {% endfor %}
+               </select>
+            </div>
+
+            <div class="form-element">
+               <label for="start_date">start_date</label>
+               <input type="text" name="work_exp[{{key}}][start_date]" class="start_date" class="datepicker" autocomplete="off" value="{{work_exp->start_date}}"/>
+            </div>
+
+            <div class="form-element">
+               <label for="end_date">end_date</label>
+               <input type="text" name="work_exp[{{key}}][end_date]" class="end_date" class="datepicker" autocomplete="off" value="{{work_exp->end_date}}"/>
+            </div>
+
+            <div class="form-element">
+               <label for="still_working">still_working</label>
+               <input type="checkbox" name="work_exp[{{key}}][still_working]" class="still_working" value="1" {% if work_exp->still_working %}checked="checked"{% endif %}/>
+            </div>
+
+            <div class="form-element">
+               <label for="description">description</label>
+               <textarea name="work_exp[{{key}}][description]" class="description" >{{work_exp->description}}</textarea>
+            </div>
+            {% if key != 0%}
+            <a href="#0" onclick="delLine($(this))" class="button">[Remove]</a>
+            {% endif %}
+         </div>
+         {% endfor %}
+      </div>
+      <br />
+      <a href="#0" onclick="addMoreWorkExp();" class="button">Add More</a>
+   </fieldset>
+   <fieldset>
+      <legend>degrees</legend>
+      <div id="degree_list">
+         {% for seeker->SeekerEduDegree as key=>degree %}
+         <div id="degree" class="element">
+            {% if key != 0%}
+            <hr />
+            {% endif %}
+            <div class="form-element">
+               <label for="degree_level">degree_level</label>
+               <select name="degree[{{key}}][degree_level]" class="degree_level" >
+                  <option value="">Select Level</option>
+                  <option value="uni_bachelors" {% if degree->degree_level == 'uni_bachelors' %}selected="selected"{% endif %}>uni_bachelors</option>
+                  <option value="masters" {% if degree->degree_level == 'masters' %}selected="selected"{% endif %}>masters</option>
+                  <option value="phd" {% if degree->degree_level == 'phd' %}selected="selected"{% endif %}>phd</option>
+               </select>
+            </div>
+
+            <div class="form-element">
+               <label for="uni_name">uni Name</label>
+               <input type="text" name="degree[{{key}}][uni_name]" class="uni_name" value="{{degree->uni_name}}" />
+            </div>
+
+            <div class="form-element">
+               <label for="degree">degree</label>
+               <input type="text" name="degree[{{key}}][degree]" class="degree" value="{{degree->degree}}" />
+            </div>
+            {% if key != 0%}
+            <a href="#0" onclick="delLine($(this))" class="button">[Remove]</a>
+            {% endif %}
+         </div>
+         {% endfor %}
+      </div>
+      <br />
+      <a href="#0" onclick="addMoreDegree();" class="button">Add More</a>
+   </fieldset>
+   <fieldset>
+      <legend>education</legend>
+      <div id="edu_list">
+         {% for seeker->SeekerEdu as key=>edu %}
+         <div id="edu" class="element">
+            {% if key != 0%}
+            <hr />
+            {% endif %}
+            <div class="form-element">
+               <label for="edu_level">edu_level</label>
+               <select name="edu[{{key}}][edu_level]" class="edu_level" >
+                  <option value="">Select Level</option>
+                  <option value="elementary" {% if edu->edu_level == 'elementary' %}selected="selected"{% endif %}>elementary</option>
+                  <option value="high_school" {% if edu->edu_level == 'high_school' %}selected="selected"{% endif %}>high_school</option>
+                  <option value="diploma" {% if edu->edu_level == 'diploma' %}selected="selected"{% endif %}>diploma</option>
+                  <option value="uni_bachelors" {% if edu->edu_level == 'uni_bachelors' %}selected="selected"{% endif %}>uni_bachelors</option>
+                  <option value="masters" {% if edu->edu_level == 'masters' %}selected="selected"{% endif %}>masters</option>
+                  <option value="phd" {% if edu->edu_level == 'phd' %}selected="selected"{% endif %}>phd</option>
+               </select>
+            </div>
+
+            <div class="form-element">
+               <label for="degree">degree</label>
+               <input type="text" name="edu[{{key}}][degree]" class="degree" value="{{edu->degree}}"/>
+            </div>
+
+            <div class="form-element">
+               <label for="uni_name">uni Name</label>
+               <input type="text" name="edu[{{key}}][uni_name]" class="uni_name" value="{{edu->uni_name}}" />
+            </div>
+
+            <div class="form-element">
+               <label for="country">Country</label>
+               <select name="edu[{{key}}][country_id]" class="country" >
+                  <option value="">Select Country</option>
+                  {% for countries as country %}
+                  <option value="{{country->id}}" {% if edu->country_id == 'country->id' %}selected="selected"{% endif %}>{{country->country_name}}</option>
+                  {% endfor %}
+               </select>
+            </div>
+
+            <div class="form-element">
+               <label for="start_date">start_date</label>
+               <input type="text" name="edu[{{key}}][start_date]" class="start_date" class="datepicker" autocomplete="off" value="{{edu->start_date}}"/>
+            </div>
+
+            <div class="form-element">
+               <label for="graduation_date">graduation_date</label>
+               <input type="text" name="edu[{{key}}][graduation_date]" class="graduation_date" class="datepicker" autocomplete="off" value="{{edu->graduation_date}}"/>
+            </div>
+            {% if key != 0%}
+            <a href="#0" onclick="delLine($(this))" class="button">[Remove]</a>
+            {% endif %}
+         </div>
+         {% endfor %}
+      </div>
+      <br />
+      <a href="#0" onclick="addMoreEdu();" class="button">Add More</a>
+   </fieldset>
+   <fieldset>
+      <legend>other information</legend>
+      <div id="other_list">
+         {% for seeker->SeekerOtherInfo as key=>other %}
+         <div id="other" class="element">
+            {% if key != 0%}
+            <hr />
+            {% endif %}
+            <div class="form-element">
+               <label for="title">title</label>
+               <input type="text" name="other[{{key}}][title]" class="title" value="{{other->title}}" />
+            </div>
+
+            <div class="form-element">
+               <label for="description">description</label>
+               <textarea name="other[{{key}}][description]" class="description" >{{other->description}}</textarea>
+            </div>
+            {% if key != 0%}
+            <a href="#0" onclick="delLine($(this))" class="button">[Remove]</a>
+            {% endif %}
+         </div>
+         {% endfor %}
+      </div>
+      <br />
+      <a href="#0" onclick="addMoreOther();" class="button">Add More</a>
+   </fieldset>
+   <div class="form-element">
+      <input type="submit" value="Save" class="button" />
+   </div>
+</form>

@@ -1,0 +1,28 @@
+<h1>Job Seeker Signup</h1>
+
+<form action="{{APP_URL}}user/signup_submit/seeker" enctype="multipart/form-data" method="post">
+   <div class="form-element">
+      <label for="email">Email</label>
+      <input type="text" name="user[email]" id="email" />
+   </div>
+
+   <div class="form-element">
+      <label for="password">Password</label>
+      <input type="password" name="user[password]" id="password" />
+   </div>
+
+   <div class="form-element">
+      <label for="cpassword">Confirm Password</label>
+      <input type="password" name="cpassword" id="cpassword" />
+   </div>
+
+   <div class="form-element">
+      <label for="file">upload your CV</label>
+      <input type="file" name="file" id="file"  accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.oasis.opendocument.text, text/plain" />
+   </div>
+
+   <div class="form-element">
+      <input type="submit" value="Signup" />
+   </div>
+
+</form>

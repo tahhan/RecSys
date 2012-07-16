@@ -1,0 +1,95 @@
+<h2>{{seeker->full_name}} Profile</h2>
+<a href="{{APP_URL}}seeker/edit_profile" class="button">Edit Profile</a>
+<a href="{{APP_URL}}seeker/view_cv" class="button">View CV</a>
+
+<fieldset>
+   <legend>Personal Information</legend>
+   <div class="info-line">
+      <span>phone Number :</span> <span>{{seeker->telephone}}</span>
+   </div>
+   <div class="info-line">
+      <span>email :</span> <span>{{seeker->email}}</span>
+   </div>
+   <div class="info-line">
+      <span>DOB :</span> <span>{{seeker->DOB}}</span>
+   </div>
+   <div class="info-line">
+      <span>gender :</span> <span>{{seeker->gender}}</span>
+   </div>
+   <div class="info-line">
+      <span>marital_status :</span> <span>{{seeker->marital_status}}</span>
+   </div>
+   <div class="info-line">
+      <span>nationalities :</span> 
+      <ul>
+         {% for seeker->nationalities as nationalitie %}
+            <li>{{nationalitie->country_name}}</li>
+         {% endfor %}
+      </ul>
+   </div>
+   <div class="info-line">
+      <span>living_in :</span> <span>{{seeker->living_in->country_name}}</span>
+   </div>
+   <div class="info-line">
+      <span>residency_status :</span> <span>{{residency_status(seeker->residency_status)}}</span> 
+   </div>
+</fieldset>
+{% if isset(seeker->SeekerProfessionalInfo) %}
+<fieldset>
+   <legend>Professional Information</legend>
+   <div class="info-line">
+      <span>exp_years :</span> <span>{{seeker->SeekerProfessionalInfo->exp_years}}</span> 
+   </div>
+   <div class="info-line">
+      <span>last_job_title :</span> <span>{{seeker->SeekerProfessionalInfo->last_job_title}}</span> 
+   </div>
+   <div class="info-line">
+      <span>primary_comm :</span> <span>{{seeker->SeekerProfessionalInfo->primary_comm->industry_name}}</span> 
+   </div>
+   {% if seeker->SeekerProfessionalInfo->second_comm != 0 %}
+   <div class="info-line">
+      <span>second_comm :</span> <span>{{seeker->SeekerProfessionalInfo->second_comm->industry_name}}</span> 
+   </div>
+   {% endif %}
+   {% if seeker->SeekerProfessionalInfo->third_comm != 0 %}
+   <div class="info-line">
+      <span>third_comm :</span> <span>{{seeker->SeekerProfessionalInfo->third_comm->industry_name}}</span> 
+   </div>
+   {% endif %}
+   <div class="info-line">
+      <span>Languages :</span>
+      {% for seeker->SeekerProfessionalInfo->lang_list as lang %}
+      <ul>
+         <li><span>{{lang->name}}</span>:<span>{{lang->proficiency}}</span></li> 
+      </ul>
+      {% endfor %}
+   </div>
+   <div class="info-line">
+      <span>preferd_place  :</span> <span>{{seeker->SeekerProfessionalInfo->preferd_place->country_name}}</span> 
+   </div>
+   <div class="info-line">
+      <span>skills  :</span> <P>{{seeker->SeekerProfessionalInfo->skills }}</P> 
+   </div>
+</fieldset>
+{% endif %}
+{% if isset(seeker->SeekerEduInfo) && (empty(seeker->SeekerEduInfo) != 1) %}
+<fieldset>
+   <legend>Educational Information</legend>
+   <div class="info-line">
+      <span>highest_level :</span> <span>{{seeker->SeekerEduInfo->highest_level}}</span>
+   </div>
+</fieldset>
+{% endif %}
+{% if isset(seeker->SeekerOtherInfo) && empty(seeker->SeekerOtherInfo) != 1  %}
+<fieldset>
+   <legend>Additional Information</legend>
+   {% for seeker->SeekerOtherInfo as SeekerOtherInfo %}
+   <div class="info-line">
+      <span>title :</span> <span>{{SeekerOtherInfo->title}}</span>
+   </div>
+   <div class="info-line">
+      <span>description :</span> <span>{{SeekerOtherInfo->description}}</span>
+   </div>
+   {% endfor %}
+</fieldset>
+{% endif %}

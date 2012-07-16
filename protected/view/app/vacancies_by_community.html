@@ -1,0 +1,13 @@
+<h2>Job Vacancies By Community</h2>
+{% for industries as industry %}
+{% if empty(industry->vacancies) != 1 %}
+<div class="country">
+   <span class="bold">{{industry->industry_name}}:</span><br />
+   <ul>
+      {% for industry->vacancies as vacancy %}
+      <li><a href="{{APP_URL}}app/view_vacancy/{{vacancy->id}}" class="button">{{vacancy->job_title}}</a> in <span>({{vacancy->Department->Company->company_name}})</span></li>
+      {% endfor %}
+   </ul>
+</div>
+{% endif %}
+{% endfor %}

@@ -1,0 +1,8 @@
+<h2>Latest Job Vacancies</h2>
+<ul>
+   {% for vacancies as vacancy %}
+   <li><a href="{{APP_URL}}app/view_vacancy/{{vacancy->id}}" class="button">{{vacancy->job_title}}</a> in {{vacancy->Department->Company->company_name}}</li>
+   {% ifempty %}
+<h3>No new vacancies</h3>
+{% endif %}
+</ul>
